@@ -13,7 +13,7 @@ use Cubex\Mapper\Database\RecordMapper;
 
 class Translator implements \Cubex\I18n\Translator\Translator
 {
-  use ConfigTrait
+  use ConfigTrait;
 
   /**
    * @var \Cubex\I18n\Translator\Translator
