@@ -12,12 +12,12 @@ class Translation extends RecordMapper
   protected $_dbServiceName = 'bundl.translations';
   protected $_dbTableName = 'translations';
 
-  public $original_id;
+  public $originalId;
   public $language;
   public $translated;
   public $approved;
-  public $approved_on;
-  public $approved_by;
+  public $approvedOn;
+  public $approvedBy;
 
   public function original()
   {

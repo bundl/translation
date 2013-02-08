@@ -39,8 +39,10 @@ class Translator implements \Cubex\I18n\Translator\Translator
 
     $translation = Translation::loadWhere(
       "%C = %d AND %C = %s",
-      "original_id", $original->id(),
-      "language", $targetLanguage
+      "original_id",
+      $original->id(),
+      "language",
+      $targetLanguage
     );
 
     if($translation !== null && $translation instanceof Translation)
@@ -58,14 +60,19 @@ class Translator implements \Cubex\I18n\Translator\Translator
     }
 
     $translated = $this->_fallback->translate(
-      $text, $sourceLanguage, $targetLanguage
+      $text,
+      $sourceLanguage,
+      $targetLanguage
     );
 
-    $translation              = new Translation();
-    $translation->original_id = $original->id();
-    $translation->language    = $targetLanguage;
-    $translation->translated  = $translated;
-    $translation->saveChanges();
+    if($translated !== $text)
+    {
+      $translation              = new Translation();
+      $translation->originalId = $original->id();
+      $translation->language    = $targetLanguage;
+      $translation->translated  = $translated;
+      $translation->saveChanges();
+    }
 
     return $translated;
   }
