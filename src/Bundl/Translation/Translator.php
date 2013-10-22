@@ -8,19 +8,19 @@ namespace Bundl\Translation;
 use Bundl\Translation\Mappers\Original;
 use Bundl\Translation\Mappers\Translation;
 use Cubex\Foundation\Config\ConfigTrait;
+use Cubex\I18n\Translator\ITranslator;
 use Cubex\Mapper\Database\RecordCollection;
-use Cubex\Mapper\Database\RecordMapper;
 
-class Translator implements \Cubex\I18n\Translator\Translator
+class Translator implements ITranslator
 {
   use ConfigTrait;
 
   /**
-   * @var \Cubex\I18n\Translator\Translator
+   * @var ITranslator
    */
   protected $_fallback;
 
-  public function fallbackTranslator(\Cubex\I18n\Translator\Translator $fall)
+  public function fallbackTranslator(ITranslator $fall)
   {
     $this->_fallback = $fall;
   }
@@ -67,10 +67,10 @@ class Translator implements \Cubex\I18n\Translator\Translator
 
     if($translated !== $text)
     {
-      $translation              = new Translation();
+      $translation             = new Translation();
       $translation->originalId = $original->id();
-      $translation->language    = $targetLanguage;
-      $translation->translated  = $translated;
+      $translation->language   = $targetLanguage;
+      $translation->translated = $translated;
       $translation->saveChanges();
     }
 
@@ -95,7 +95,7 @@ class Translator implements \Cubex\I18n\Translator\Translator
     }
 
     $t = new $translator();
-    if($t instanceof \Cubex\I18n\Translator\Translator)
+    if($t instanceof ITranslator)
     {
       $t->configure($this->_configuration);
     }
